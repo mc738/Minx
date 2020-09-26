@@ -11,33 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb87d108-15bf-48b3-a36d-4c5bdee023f1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Component1.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/Calendar.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/Card.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/LoadingScreen.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/LoadingScreen.razor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/Modal.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/Modal.razor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/TabControl.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Components/TabItem.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/ExampleJsInterop.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/Button.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/DateInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/DecimalInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/DoubleInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/DropDownInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/FileInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/FileUpload.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/IntInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/SwitchInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Inputs/TextInput.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Minx.Razor.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Models/DropDownItem.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Services/LoadingScreenService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/Services/ModalService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/_Imports.razor" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/wwwroot/background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Minx.Razor/wwwroot/exampleJsInterop.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TODO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Minx.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Minx.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +22,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -58,6 +40,8 @@
         <option value="$PROJECT_DIR$/Minx.Razor/Inputs/DropDownInput.razor" />
         <option value="$PROJECT_DIR$/Minx.Razor/wwwroot/styles.css" />
         <option value="$PROJECT_DIR$/Minx.Razor/Inputs/TextInput.razor" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -76,6 +60,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/TODO.md" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -86,8 +71,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1601122051725</updated>
-      <workItem from="1601122096799" duration="1208000" />
+      <workItem from="1601122096799" duration="1499000" />
     </task>
+    <task id="LOCAL-00001" summary="Init">
+      <created>1601123419753</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1601123419753</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,8 +102,18 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Init" />
+    <option name="LAST_COMMIT_MESSAGE" value="Init" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="466" y="158" width="424" height="490" key="FileChooserDialogImpl" timestamp="1601123577973">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state x="466" y="158" width="424" height="490" key="FileChooserDialogImpl/0.32.1366.736@0.32.1366.736" timestamp="1601123577973" />
+    <state x="544" y="300" width="277" height="206" key="Github.ShareDialog" timestamp="1601123463657">
+      <screen x="0" y="32" width="1366" height="736" />
+    </state>
+    <state x="544" y="300" width="277" height="206" key="Github.ShareDialog/0.32.1366.736@0.32.1366.736" timestamp="1601123463657" />
     <state x="278" y="135" width="800" height="536" key="Rider.ProjectTemplateDialog.Size" timestamp="1601122379123">
       <screen x="0" y="32" width="1366" height="736" />
     </state>

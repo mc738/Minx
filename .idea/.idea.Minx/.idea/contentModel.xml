@@ -7,6 +7,7 @@
     <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
     <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="Documentation" t="Include" />
       <e p="Minx.Razor" t="IncludeRecursive">
         <e p="Component1.razor" t="Include" />
         <e p="Components" t="Include">
@@ -55,10 +56,16 @@
             <e p="styles.css" t="Include" />
           </e>
           <e p="exampleJsInterop.js" t="Include" />
-          <e p="js" t="Include" />
+          <e p="js" t="Include">
+            <e p="googleMaps.js" t="Include" />
+            <e p="inputFile.js" t="Include" />
+            <e p="saveFile.js" t="Include" />
+          </e>
         </e>
       </e>
       <e p="Minx.sln" t="IncludeFlat" />
+      <e p="README.md" t="Include" />
+      <e p="TODO.md" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
     </e>
   </component>
