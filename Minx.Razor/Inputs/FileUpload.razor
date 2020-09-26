@@ -1,0 +1,199 @@
+﻿@* @using PostBoard.Shared  *@
+@* *@
+@* @inject Microsoft.JSInterop.IJSRuntime Js *@
+@* *@
+@* $1$<TextBox Label="Test" ShowMessage="false"></TextBox>#1# *@
+@* <div> *@
+@*     <div style="display: flex; flex-direction: row; justify-content: space-between"> *@
+@*         <label style="margin: auto 0; padding: 0.5em; padding-left: 5px;">@Label</label> *@
+@*         <Button Label="Add" For="@Id"></Button> *@
+@*     </div> *@
+@*     <FileInput Id="@Id" OnChange="HandleFileSelected"></FileInput> *@
+@*     $1$<input id="@Id" class="hidden" type="file" @onchange="GetFile" required>#1# *@
+@*     <div style="overflow: hidden;"> *@
+@* *@
+@* *@
+@*     </div> *@
+@* *@
+@* </div> *@
+@* @foreach (var file in Files.Values) *@
+@* { *@
+@*     <div style="display: flex; flex-direction: row; justify-content: space-between"> *@
+@*         <div style="width: calc(100% - 250px)"> *@
+@*             <TextInput @bind-Value="file.FileName" Label="Name" Required="true" ShowMessage="true"></TextInput> *@
+@*         </div> *@
+@*         <div style="width: 50px; display: flex;"> *@
+@*             <p style="margin:auto;">@file.Extension</p> *@
+@*         </div> *@
+@*         <div style="width: 100px; display: flex;"> *@
+@*             @if (file.Size < 1) *@
+@*             { *@
+@*                 <p style="margin:auto;">&lt;1MB</p> *@
+@*             } *@
+@*             @if (file.Size >= 1) *@
+@*             { *@
+@*                 <p style="margin:auto;">@file.Size.ToString("#.##")MB</p> *@
+@*             } *@
+@* *@
+@* *@
+@*         </div> *@
+@*         @if (file.FileUploaded && !file.Uploading) *@
+@*         { *@
+@*             <Button Label="Download" IconButton="true" Icon="fas fa-download" Border="false" Clicked="() => UploadFileClicked(file)"></Button> *@
+@*         } *@
+@*         @if (!file.FileUploaded && !file.Uploading) *@
+@*         { *@
+@*             <Button Label="Upload" IconButton="true" Icon="fas fa-upload" Border="false" Clicked="() => UploadFileClicked(file)"></Button> *@
+@*         } *@
+@*         @if (file.Uploading) *@
+@*         { *@
+@*             <div style="height: 50px; width: 50px; background-color: black"></div> *@
+@*         } *@
+@*         <Button Label="Upload" IconButton="true" Icon="fas fa-times" Border="false" Clicked="() => RemoveFile(file.Reference)"></Button> *@
+@*     </div> *@
+@* } *@
+@* *@
+@* *@
+@* @code { *@
+@* *@
+@*     string value; *@
+@* *@
+@*     [Parameter] *@
+@*     public string Id { get; set; } *@
+@* *@
+@*     [Parameter] *@
+@*     public bool Required { get; set; } = false; *@
+@* *@
+@*     [Parameter] *@
+@*     public string ErrorMessage { get; set; } = "Error"; *@
+@* *@
+@*     [Parameter] *@
+@*     public string Label { get; set; } *@
+@* *@
+@*     [Parameter] *@
+@*     public bool? Valid { get; set; } *@
+@* *@
+@*     [Parameter] *@
+@*     public bool ShowMessage { get; set; } = true; *@
+@* *@
+@*     bool uploading = false; *@
+@* *@
+@*     bool clicked = false; *@
+@* *@
+@*     string x; *@
+@*     string y; *@
+@* *@
+@*     string height = "0"; *@
+@*     string width = "0"; *@
+@* *@
+@*     [Parameter] *@
+@*     public string Value *@
+@*     { *@
+@*         get => value; *@
+@*         set *@
+@*         { *@
+@*             if (value == String.Empty && Required) *@
+@*             { *@
+@*                 ErrorMessage = "Required"; *@
+@*                 Valid = false; *@
+@*             } *@
+@* *@
+@*             if (this.value != value) *@
+@*             { *@
+@*                 this.value = value; *@
+@*                 ValueChanged.InvokeAsync(value); *@
+@*             } *@
+@*         } *@
+@* *@
+@*     } *@
+@* *@
+@*     [Parameter] *@
+@*     public Dictionary<Guid, FileData> Files { get; set; } = new Dictionary<Guid, FileData>(); *@
+@* *@
+@*     [Parameter] *@
+@*     public EventCallback<string> ValueChanged { get; set; } *@
+@* *@
+@* *@
+@*     [Parameter] *@
+@*     public EventCallback<FileData> UploadFile { get; set; } *@
+@* *@
+@*     protected override void OnParametersSet() *@
+@*     { *@
+@*         base.OnParametersSet(); *@
+@*         StateHasChanged(); *@
+@*     } *@
+@* *@
+@*     async Task HandleFileSelected(Client.InputFile.IFileListEntry[] files) *@
+@*     { *@
+@*         // Do something with the files, e.g., read them *@
+@*         var file = files.FirstOrDefault(); *@
+@* *@
+@*         var buffer = new byte[file.Size]; *@
+@* *@
+@*         var fd = new FileData(); *@
+@* *@
+@*         if (file != null) *@
+@*         { *@
+@*             using (var ms = new System.IO.MemoryStream()) *@
+@*             { *@
+@*                 await file.Data.CopyToAsync(ms); *@
+@* *@
+@*                 fd.File = ms.ToArray(); *@
+@*             } *@
+@* *@
+@*         } *@
+@* *@
+@* *@
+@*         fd.Name = file.Name; *@
+@* *@
+@* *@
+@*         await UploadFile.InvokeAsync(fd); *@
+@* *@
+@*         // =  (decimal)file.Size; *@
+@*     } *@
+@* *@
+@*     async System.Threading.Tasks.Task Update() *@
+@*     { *@
+@*         await ValueChanged.InvokeAsync(value); *@
+@*     } *@
+@* *@
+@*     void UploadFileClicked(FileData file) *@
+@*     { *@
+@*         Console.WriteLine(file.Name); *@
+@* *@
+@*         UploadFile.InvokeAsync(file); *@
+@* *@
+@*         file.Uploading = false; *@
+@*         file.FileUploaded = true; *@
+@* *@
+@*         // Files.Remove(file.Reference); *@
+@* *@
+@*         StateHasChanged(); *@
+@*     } *@
+@* *@
+@*     async void GetFile() *@
+@*     { *@
+@*         var data = await Js.InvokeAsync<FileData>("methods.uploadFile", new object[] { Id }); *@
+@* *@
+@*         // System.Net.Http.HttpClient client = new System.Net.Http.HttpClient(); *@
+@* *@
+@*         //   data.File = await client.GetByteArrayAsync(data.Url); *@
+@* *@
+@*         value = data.Name; *@
+@* *@
+@*         data.SetName(); *@
+@* *@
+@*         Files.Add(data.Reference, data); *@
+@* *@
+@*         // Console.WriteLine($"Name: {data.Name}, Url: {data.Url}"); *@
+@* *@
+@*         StateHasChanged(); *@
+@* *@
+@*         // Console.WriteLine($"Url: {url}\tLength: {file.Length}"); *@
+@*     } *@
+@* *@
+@*     void RemoveFile(Guid reference) *@
+@*     { *@
+@*         Files.Remove(reference); *@
+@*     } *@
+@* } *@

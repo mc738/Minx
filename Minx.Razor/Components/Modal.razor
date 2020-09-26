@@ -1,0 +1,29 @@
+﻿@inherits ModalBase
+
+<div class="modal-container @(IsVisible ? "modal-active" : string.Empty)">
+
+    <div class="modal-overlay"></div>
+
+
+    <div class="modal">
+        <Card Size="Card.CardSize.Full" Title="@Title" FixedSize="false" headerButtons="headerButtons">
+            @Content
+        </Card>
+    </div>
+</div>
+
+
+@code {
+
+    IEnumerable<Card.HeaderButton> headerButtons;
+
+
+    protected override void OnInitialized()
+    {
+        headerButtons = new List<Card.HeaderButton>(){
+            new Card.HeaderButton("fas fa-times", EventCallback.Factory.Create(this, CloseModal))};
+
+        base.OnInitialized();
+    }
+
+}

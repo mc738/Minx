@@ -1,0 +1,102 @@
+﻿
+<div class="card @GenerateCardSizeClass() @GenerateCardType() @GenerateFixedSize()">
+    <div class="card-header">
+        <div class="card-title">
+            <h2>@Title</h2>
+        </div>
+        @if (headerButtons != null)
+        {
+            <div class="header-buttons">
+                @foreach (var button in headerButtons)
+                {
+                    <Button Icon="@button.Icon" IconButton="true" Border="false" Clicked="@button.Callback"></Button>
+                }
+            </div>
+        }
+    </div>
+    <div class="card-body">
+        @ChildContent
+    </div>
+
+    @if (HasFooter)
+    {
+        <div class="card-footer">
+
+        </div>
+    }
+</div>
+
+
+@code {
+
+    [Parameter]
+    public bool FixedSize { get; set; } = true;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public CardSize Size { get; set; } = CardSize.Small;
+
+    [Parameter]
+    public IEnumerable<HeaderButton> headerButtons { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public bool HasFooter { get; set; } = false;
+
+    [Parameter]
+    public bool IsDark { get; set; } = false;
+
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+
+    public string GenerateCardSizeClass()
+    {
+        return Size switch
+        {
+            CardSize.ExtraSmall => "card-xs",
+            CardSize.Small => "card-sm",
+            CardSize.Medium => "card-md",
+            CardSize.Large => "card-lg",
+            CardSize.ExtraLarge => "card-xl",
+            CardSize.Full => "card-full",
+            _ => "card-sm"
+        };
+    }
+
+    private string GenerateCardType() => IsDark ? "dark" : "light";
+
+    private string GenerateFixedSize() => FixedSize ? "fixed-size" : string.Empty;
+
+    public class HeaderButton
+    {
+        private readonly string icon;
+        private readonly EventCallback callback;
+
+        public string Icon => icon;
+        public EventCallback Callback => callback;
+
+        public HeaderButton(string icon, EventCallback callback)
+        {
+            this.icon = icon;
+            this.callback = callback;
+        }
+    }
+
+    public enum CardSize
+    {
+        ExtraSmall = 1,
+        Small = 2,
+        Medium = 3,
+        Large = 4,
+        ExtraLarge = 5,
+        Full = 6
+    }
+}

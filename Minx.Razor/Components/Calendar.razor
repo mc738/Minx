@@ -1,0 +1,167 @@
+﻿
+<div style="display: flex; justify-content: flex-end">
+    <Button Icon="fas fa-chevron-left" IconButton="true" Border="false" Clicked="PerviousMonth"></Button>
+    <div style="display: flex; align-items: center; height: 50px">
+        <p>@firstOfMonth.ToString("MMM yy")</p>
+    </div>
+    <Button Icon="fas fa-chevron-right" IconButton="true" Border="false" Clicked="NextMonth"></Button>
+</div>
+
+<div style="width: 100%; display: flex;">
+    <div class="calendar-header">
+        <p>Mon</p>
+    </div>
+    <div class="calendar-header">
+        <p>Tue</p>
+    </div>
+    <div class="calendar-header">
+        <p>Wed</p>
+    </div>
+    <div class="calendar-header">
+        <p>Thu</p>
+    </div>
+    <div class="calendar-header">
+        <p>Fri</p>
+    </div>
+    <div class="calendar-header">
+        <p>Sat</p>
+    </div>
+    <div class="calendar-header">
+        <p>Sun</p>
+    </div>
+</div>
+
+@if (monthView != null)
+{
+    <div>
+        @foreach (var week in monthView.Weeks)
+        {
+            <div style="width: 100%; display: flex;">
+                @foreach (var day in week.Days)
+                {
+                    <div  class="calendar-item">
+                        <p>@day.Date.ToString("dd")</p>
+                    </div>
+                }
+            </div>
+
+        }
+    </div>
+}
+
+@code {
+
+    int year;
+    int month;
+
+    Month monthView;
+
+    DateTime firstOfMonth;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        month = DateTime.Now.Month;
+        year = DateTime.Now.Year;
+
+        CreateMonthView();
+    }
+
+    public static RenderFragment Create()
+    {
+        RenderFragment content() => builder =>
+        {
+            builder.OpenComponent(0, typeof(Calendar));
+        // builder.AddAttribute(1, "ProjectReference", projectReference);
+        // builder.AddAttribute(2, "Added", addedCallBack);
+        builder.CloseComponent();
+        };
+
+        return content();
+    }
+
+
+    void CreateMonthView()
+    {
+
+        //var month = int.Parse(Console.ReadLine());
+
+        firstOfMonth = new DateTime(year, month, 1);
+
+        var lastOfMonth = firstOfMonth.AddMonths(1).AddDays(-1);
+
+        int diff = (7 + (firstOfMonth.DayOfWeek - DayOfWeek.Monday)) % 7;
+
+        var firstDay = firstOfMonth.AddDays(-1 * diff);
+
+        var lastDay = lastOfMonth.AddDays(7 - (int)lastOfMonth.DayOfWeek);
+
+
+        var weeks = new List<Week>();
+
+        var currentDate = firstDay;
+
+
+        while (currentDate.Date <= lastDay.Date)
+        {
+            weeks.Add(CreateWeek(currentDate));
+
+            currentDate = currentDate.AddDays(7);
+        }
+
+        monthView = new Month() { Weeks = weeks };
+    }
+
+    Week CreateWeek(DateTime startDate)
+    {
+        List<Day> days = new List<Day>();
+
+        for (int i = 0; i < 7; i++)
+        {
+            days.Add(CreateDay(startDate.AddDays(i)));
+        }
+
+        return new Week() { Days = days };
+    }
+
+    Day CreateDay(DateTime date)
+    {
+        return new Day() { Date = date };
+    }
+
+    class Month
+    {
+        public IEnumerable<Week> Weeks { get; set; }
+    }
+
+    class Week
+    {
+        public IEnumerable<Day> Days { get; set; }
+    }
+
+    class Day
+    {
+        public DateTime Date { get; set; }
+    }
+
+
+    void NextMonth()
+    {
+        firstOfMonth = firstOfMonth.AddMonths(1);
+
+        year = firstOfMonth.Year;
+        month = firstOfMonth.Month;
+
+        CreateMonthView();
+    }
+
+    void PerviousMonth()
+    {
+        firstOfMonth = firstOfMonth.AddMonths(-1);
+
+        year = firstOfMonth.Year;
+        month = firstOfMonth.Month;
+
+        CreateMonthView();
+    }
+}

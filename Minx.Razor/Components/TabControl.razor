@@ -1,0 +1,78 @@
+﻿<div class="tabs">
+
+    <ol class="tab-list t-list">
+        @foreach (TabItem tabPage in Pages)
+        {
+            <li class="tab-list-item @(ActivePage == tabPage ? "tab-list-active" : "")"
+                @onclick=@( () => ActivatePage(tabPage) )>
+                <div style="display: flex;">
+                    <h2>
+                        @if (tabPage.Icon != null)
+                        {
+                            <span style="padding-right: 0.5em"><i class="@tabPage.Icon"></i></span>
+                        }
+                        @if (tabPage.Text != null)
+                        {
+                            @tabPage.Text
+                        }
+                        @if (tabPage.Closable)
+                        {
+                            <span style="padding-left: 0.5em" @onclick=@(() => CloseTab(tabPage))>
+                                <i class="fas fa-times"></i>
+
+                            </span>
+                        }
+                    </h2>
+                </div>
+            </li>
+        }
+    </ol>
+
+    <div class="@GenerateContainerStyle()">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public bool MainTab { get; set; } = true;
+
+    public TabItem ActivePage { get; set; }
+
+    List<TabItem> Pages = new List<TabItem>();
+
+    string containerStyle = "";
+
+    internal void AddPage(TabItem tabPage)
+    {
+        Pages.Add(tabPage);
+        if (Pages.Count == 1)
+            ActivePage = tabPage;
+        StateHasChanged();
+    }
+
+    string GenerateContainerStyle()
+    {
+        return MainTab ? "tab-content t-content" : "t-content";
+    }
+
+    string GetButtonClass(TabItem page)
+    {
+        return page == ActivePage ? "btn-primary" : "btn-secondary";
+    }
+    void ActivatePage(TabItem page)
+    {
+        ActivePage = page;
+    }
+
+    void CloseTab(TabItem page)
+    {
+        Pages.Remove(page);
+    }
+}

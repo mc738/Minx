@@ -1,0 +1,83 @@
+﻿<div class="@GenerateClasses()">
+    <label class="@GenerateLabelClasses()" @onclick="@(e => ButtonPressed(e))" for="@For">
+        @if (Icon != null)
+        {
+            <i class="@Icon"></i>
+        }
+        @if (!IconButton)
+        {
+            <p>@Label</p>
+        }
+    </label>
+    <div class="ripples">
+        @foreach (var ripple in ripples)
+        {
+            @ripple
+        }
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string For { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+
+    [Parameter]
+    public bool IconButton { get; set; } = false;
+
+    [Parameter]
+    public bool Border { get; set; } = true;
+
+    [Parameter]
+    public EventCallback Clicked { get; set; }
+
+    List<RenderFragment> ripples = new List<RenderFragment>();
+
+    int transform = 0;
+
+    string x = "0";
+    string y = "0";
+
+    void ButtonPressed(MouseEventArgs args)
+    {
+        RenderFragment ripple;
+
+        x = (args.ClientX - 100) + "px";
+        y = (args.ClientY - 100) + "px";
+
+        // Console.WriteLine($"{args.ClientX}, {args.ClientY}");
+
+        ripple = b =>
+        {
+            b.OpenElement(1, "div");
+            b.AddAttribute(2, "class", "ripple");
+            b.AddAttribute(3, "style", $"left: {x}; top: {y};");
+            b.CloseElement();
+        };
+
+        ripples.Add(ripple);
+
+        StateHasChanged();
+
+        Clicked.InvokeAsync(this);
+    }
+
+    string GenerateClasses()
+    {
+        return IconButton ? "button button-sm" : "button";
+    }
+
+    string GenerateLabelClasses()
+    {
+        return Border ? "border" : "";
+    }
+}
