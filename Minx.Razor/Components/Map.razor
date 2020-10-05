@@ -1,0 +1,77 @@
+@using System.Runtime.InteropServices
+@using Microsoft.JSInterop
+@using Minx.Razor.Models
+@using Minx.Razor.Services
+@inject IJSRuntime JSRuntime
+
+<div id="map"></div>
+
+@code {
+
+    [Parameter]
+    public IEnumerable<MapMarker> Markers { get; set; }
+    
+    [Parameter]
+    public EventCallback<Guid> MarkerSelected { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var thisReference = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("maps.addScript", thisReference);
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadMarkers();
+    }
+
+    //
+    [JSInvokable("Map")]
+    public async Task LoadMarkers()
+    {
+        await ClearMarkers();
+
+        foreach (var marker in Markers)
+        {
+            await AddMarker(marker);
+        }
+    }
+
+    [JSInvokable("OnMarkerSelect")]
+    public async Task OnMarkerSelect(Guid reference)
+    {
+        var organisation = Markers.SingleOrDefault(x => x.Reference == reference);
+
+        if (organisation != null)
+            MarkerSelected.InvokeAsync(reference);
+    }
+    
+    // protected override async Task OnParametersSetAsync()
+    // {
+    //    if (posts != null)
+    //    {
+    //        foreach (var post in posts)
+    //        {
+    //            await AddMarker(post);
+    //        }
+    //    }
+    // }
+    
+    async Task AddMarker(MapMarker marker)
+    {
+        await JSRuntime.InvokeVoidAsync(
+            "maps.addMarker",
+            marker.Name,
+            marker.Latitude,
+            marker.Longitude,
+            marker.Reference);
+    }
+
+    async Task ClearMarkers()
+    {
+        await JSRuntime.InvokeVoidAsync("maps.clearMarkers");
+    }
+}
