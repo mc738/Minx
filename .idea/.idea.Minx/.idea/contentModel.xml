@@ -3,9 +3,6 @@
   <component name="ContentModelStore">
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Minx.-739369824.00" t="ExcludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/consoles/db" t="IncludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/extensions" t="IncludeRecursive" />
-    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Documentation" t="Include" />
       <e p="Minx.Razor" t="IncludeRecursive">
@@ -15,6 +12,7 @@
           <e p="Card.razor" t="Include" />
           <e p="LoadingScreen.razor" t="Include" />
           <e p="LoadingScreen.razor.cs" t="Include" />
+          <e p="Map.razor" t="Include" />
           <e p="Modal.razor" t="Include" />
           <e p="Modal.razor.cs" t="Include" />
           <e p="TabControl.razor" t="Include" />
@@ -36,6 +34,7 @@
         <e p="Minx.Razor.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
           <e p="DropDownItem.cs" t="Include" />
+          <e p="MapMarker.cs" t="Include" />
         </e>
         <e p="Services" t="Include">
           <e p="LoadingScreenService.cs" t="Include" />
