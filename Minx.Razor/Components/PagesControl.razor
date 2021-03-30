@@ -1,0 +1,39 @@
+@using Minx.Razor.Inputs
+
+<div class="mx-pages-control">
+    <div class="mx-pages-sidebar">
+        @foreach (var page in Pages)
+        {
+            var icon = page.Icon;
+            <Button Icon="@icon" IconButton="true" Border="false" Clicked="() => ActivatePage(page)"></Button>
+        }
+    </div>
+    <div class="mx-pages">
+        <CascadingValue Value="this">
+            @ChildContent
+        </CascadingValue>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    
+    public PagesItem ActivePage { get; set; }
+
+    List<PagesItem> Pages = new List<PagesItem>();
+    
+    internal void AddPage(PagesItem page)
+    {
+        Pages.Add(page);
+        if (Pages.Count == 1)
+            ActivePage = page;
+        StateHasChanged();
+    }
+    
+    void ActivatePage(PagesItem page)
+    {
+        ActivePage = page;
+    }
+}

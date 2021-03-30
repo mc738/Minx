@@ -3,7 +3,6 @@
 1. Add the `nuget` package
 2. Add imports to `_Imports.razor`
 	```
-	@using CommunityBridges.WebApp.Shared
 	@using Minx.Razor.Components
 	@using Minx.Razor.Inputs
 	@using Minx.Razor.Services
@@ -11,7 +10,7 @@
 	```
 3. Add styles to `index.html`
 	```
-	<link href="_content/Minx.Razor/css/styles.css" rel="stylesheet" /
+	<link href="_content/Minx.Razor/css/styles.css" rel="stylesheet" />
 	```
 4. Add scripts to `index.html`
 	```

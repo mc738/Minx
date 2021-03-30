@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_Minx.-739369824.00" t="ExcludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.3/resharper-host/local/Transient/Rider/v203/SolutionCaches/_Minx.-739369824.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="Documentation" t="Include" />
       <e p="Minx.Razor" t="IncludeRecursive">
@@ -19,6 +20,7 @@
           <e p="TabItem.razor" t="Include" />
         </e>
         <e p="ExampleJsInterop.cs" t="Include" />
+        <e p="Graphs" t="Include" />
         <e p="Inputs" t="Include">
           <e p="Button.razor" t="Include" />
           <e p="DateInput.razor" t="Include" />

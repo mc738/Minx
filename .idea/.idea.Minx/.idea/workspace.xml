@@ -10,7 +10,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb87d108-15bf-48b3-a36d-4c5bdee023f1" name="Default Changelist" comment="" />
+    <list default="true" id="eb87d108-15bf-48b3-a36d-4c5bdee023f1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Minx/.idea/modules.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,22 +26,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Minx.Razor/Services/LoadingScreenService.cs" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Services/ModalService.cs" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Components/LoadingScreen.razor.cs" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Components/Modal.razor.cs" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Models/DropDownItem.cs" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Inputs/DropDownInput.razor" />
-        <option value="$PROJECT_DIR$/Minx.Razor/wwwroot/styles.css" />
-        <option value="$PROJECT_DIR$/Minx.Razor/Inputs/TextInput.razor" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/README.md" />
-      </list>
-    </option>
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="ptx6l4k4" />
@@ -54,6 +41,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/TODO.md" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -68,6 +56,7 @@
       <updated>1601122051725</updated>
       <workItem from="1601122096799" duration="1499000" />
       <workItem from="1601124043869" duration="42000" />
+      <workItem from="1614539290196" duration="237000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1601123419753</created>
@@ -76,7 +65,14 @@
       <option name="project" value="LOCAL" />
       <updated>1601123419753</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added set_up_blazor.md, fixes and little updates.">
+      <created>1614539358689</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1614539358689</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,24 +96,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Init" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="466" y="158" width="424" height="490" key="FileChooserDialogImpl" timestamp="1601123577973">
-      <screen x="0" y="32" width="1366" height="736" />
-    </state>
-    <state x="466" y="158" width="424" height="490" key="FileChooserDialogImpl/0.32.1366.736@0.32.1366.736" timestamp="1601123577973" />
-    <state x="544" y="300" width="277" height="206" key="Github.ShareDialog" timestamp="1601123463657">
-      <screen x="0" y="32" width="1366" height="736" />
-    </state>
-    <state x="544" y="300" width="277" height="206" key="Github.ShareDialog/0.32.1366.736@0.32.1366.736" timestamp="1601123463657" />
-    <state x="278" y="135" width="800" height="536" key="Rider.ProjectTemplateDialog.Size" timestamp="1601122379123">
-      <screen x="0" y="32" width="1366" height="736" />
-    </state>
-    <state x="278" y="135" width="800" height="536" key="Rider.ProjectTemplateDialog.Size/0.32.1366.736@0.32.1366.736" timestamp="1601122379123" />
-    <state x="278" y="136" width="800" height="534" key="Vcs.Push.Dialog.v2" timestamp="1601124058040">
-      <screen x="0" y="32" width="1366" height="736" />
-    </state>
-    <state x="278" y="136" width="800" height="534" key="Vcs.Push.Dialog.v2/0.32.1366.736@0.32.1366.736" timestamp="1601124058040" />
+    <MESSAGE value="Added set_up_blazor.md, fixes and little updates." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added set_up_blazor.md, fixes and little updates." />
   </component>
 </project>

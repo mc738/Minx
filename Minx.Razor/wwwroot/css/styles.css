@@ -1,10 +1,21 @@
-﻿* {
+﻿:root {
+    --color1: lightblue;
+    --color2: lightgrey;
+    --black: black;
+}
+
+* {
     margin: 0;
     border: none;
     padding: 0;
     box-sizing: border-box;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
+    text-align: left;
+}
+
+body {
+    overflow-x: hidden;
 }
 
 #map {
@@ -134,7 +145,7 @@
     /*background-color: white;*/
     /*border: solid #ccc;
     border-width: 1px 1px 0 1px;*/
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid var(--color1);
 }
 
 .tab-content {
@@ -151,12 +162,6 @@
 
 .card-title {
     padding: 0.5rem;
-}
-
-:root {
-    --color1: lightblue;
-    --color2: lightgrey;
-    --black: black;
 }
 
 input, textarea, select {
@@ -177,17 +182,42 @@ input[type=date]:focus::-webkit-datetime-edit {
     color: black !important;
 }
 
+.mx-label {
+    position: relative;
+    min-height: 50px;
+}
+
+.mx-label label {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: 10pt;
+    pointer-events: none;
+}
+
+.mx-label p {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    font-size: 14pt;
+    right: 0;
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    /*Currently a bit of a hack to get the label to match up with inputs.*/
+    padding-top: 2px;
+}
+
 .mx-input {
     position: relative;
     height: 50px;
 }
 
-
 .mx-input label {
     position: absolute;
     left: 5px;
-    top: 20px;
-    font-size: 12pt;
+    top: 5px;
+    font-size: 10pt;
     transition: 0.3s;
     pointer-events: none;
 }
@@ -201,7 +231,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     width: 100%;
     height: 30px;
     padding-left: 5px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color2);
 }
 
 .mx-input input:valid {
@@ -259,7 +289,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     width: 100%;
     height: 80px;
     padding-left: 5px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color2);
 }
 
 .mx-textarea textarea:valid {
@@ -314,7 +344,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     right: 0;
     width: 100%;
     height: 30px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color1);
 }
 
 .mx-select select:valid {
@@ -429,7 +459,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .search-box-item:hover {
-    background-color: lightgray;
+    background-color: var(--color2);
 }
 
 .search-box-item p {
@@ -541,4 +571,80 @@ input[type=date]:focus::-webkit-datetime-edit {
 
 .t-h th {
     min-width: 50px;
+}
+
+.calendar-header {
+    width: calc(100% / 7);
+    height: 50px;
+}
+
+.calendar-day {
+    width: calc(100% / 7);
+    height: 100px;
+}
+
+.calendar-day-header {
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar-day:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.calendar-day-channel {
+    height: 16px;
+    width: 100%;
+}
+
+.calendar-item {
+    width: 100%;
+    height: 100%;
+}
+
+.mx-disclosure {
+    
+}
+
+.mx-disclosure summary {
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mx-disclosure summary h3 {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.mx-disclosure summary > * {
+    display: inline;
+}
+
+.mx-pages-control {
+    height: 100%;
+    width: calc(100% - 50px);
+    display: flex;
+}
+
+.mx-pages-sidebar {
+    height: 100%;
+    width: 50px;
+    background-color: var(--color2);
+    position: relative;
+}
+
+.mx-page {
+    height: 100%;
+    width: calc(100% - 50px);
+    transform: translateX(100vw);
+    transition: 0.5s;
+    position:  absolute;
+}
+
+.mx-active-page {
+    transform: translateX(0);
 }

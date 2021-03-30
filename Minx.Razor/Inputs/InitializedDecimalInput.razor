@@ -1,0 +1,68 @@
+<div class="mx-input">
+    <input type="number" @bind="Value" step=".000001" required>
+    <label>
+        @Label @if (ShowMessage)
+        {
+            if (value == null && !Required)
+            {
+                <span style="padding-left: 10px; text-transform: none; font-style: italic; font-size: 8pt; opacity: 0.7;">Optional</span>
+            }
+            else if (Valid.HasValue)
+            {
+                if (Valid.Value)
+                {
+                    <span style="padding-left: 10px; color: green;"><i class="fas fa-check"></i></span>
+                }
+                else
+                {
+                    <span style="padding-left: 10px; color: red; text-transform: none; font-style: italic;"><i class="fas fa-exclamation"></i> @ErrorMessage</span>
+                }
+            }
+        }
+    </label>
+</div>
+
+
+@code {
+
+
+    decimal value = 0;
+
+    [Parameter]
+    public bool Required { get; set; } = false;
+
+    [Parameter]
+    public string ErrorMessage { get; set; } = "Error";
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool? Valid { get; set; }
+
+    [Parameter]
+    public bool ShowMessage { get; set; } = true;
+
+    [Parameter]
+    public decimal Value
+    {
+        get => value;
+        set
+        {
+            if (this.value != value)
+            {
+                this.value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+
+    }
+
+    [Parameter]
+    public EventCallback<decimal> ValueChanged { get; set; }
+    
+    async System.Threading.Tasks.Task Update()
+    {
+        await ValueChanged.InvokeAsync(value);
+    }
+}
