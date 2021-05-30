@@ -36,7 +36,7 @@
 
 @code {
     string value;
-    public Guid selectedReference;
+    public Guid selectedReference = Guid.Empty;
 
     [Parameter]
     public bool Required { get; set; } = false;

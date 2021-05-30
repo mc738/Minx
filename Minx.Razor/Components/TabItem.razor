@@ -1,9 +1,8 @@
-﻿<div>
-    @if (IsActive())
-    {
-        @ChildContent
-    }
-</div>
+﻿
+@if (IsActive())
+{
+    @ChildContent
+}
 
 @code {
     [CascadingParameter]

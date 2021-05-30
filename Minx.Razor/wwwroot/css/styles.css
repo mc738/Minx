@@ -23,6 +23,16 @@ body {
     width: 100%;
 }
 
+.fill {
+    height: 100%;
+    width: 100%;
+}
+
+.fill-screen {
+    height: 100vh;
+    width: 100vw;
+}
+
 .content {
     padding: 0.5rem;
 }
@@ -56,6 +66,69 @@ body {
     height: 100%;
     width: 100%;
 }
+
+/*Loading screen*/
+.loading-screen {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-screen div {
+    position: relative;
+}
+
+.loading-screen div .spinner {
+    border: 10px solid transparent;
+    border-top: 10px solid black;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-screen div #spinner1 {
+    height: 80px;
+    width: 80px;
+    animation: spin 1s linear infinite;
+    margin: -55px 0 0 -55px;
+}
+
+.loading-screen div #spinner2 {
+    height: 100px;
+    width: 100px;
+    animation: spin 1.5s linear infinite;
+    margin: -65px 0 0 -65px;
+}
+
+.loading-screen div #spinner3 {
+    animation: spin 2s linear infinite;
+    margin: -75px 0 0 -75px;
+    width: 120px;
+    height: 120px;
+}
+
+.show {
+    opacity: 1;
+    z-index: 1000; }
+
+.hide {
+    opacity: 0;
+    z-index: -1000; }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); }
+    100% {
+        transform: rotate(360deg); } }
 
 /*Modals*/
 .modal-container {
@@ -160,8 +233,17 @@ body {
     justify-content: space-between;
 }
 
+.card {
+    overflow: hidden;
+}
+
 .card-title {
     padding: 0.5rem;
+}
+
+.card-body {
+    height: calc(100% - 50px);
+    overflow-y: scroll;
 }
 
 input, textarea, select {
@@ -180,6 +262,10 @@ input[type=date]:required:invalid::-webkit-datetime-edit {
 
 input[type=date]:focus::-webkit-datetime-edit {
     color: black !important;
+}
+
+.header-buttons {
+    display: flex;
 }
 
 .mx-label {
@@ -237,7 +323,6 @@ input[type=date]:focus::-webkit-datetime-edit {
 .mx-input input:valid {
     border-bottom: 3px solid var(--color1);
 }
-
 
 
 .mx-input input:focus + label,
@@ -442,7 +527,6 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 
-
 .search-box {
     width: 100%;
     position: absolute;
@@ -450,7 +534,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     left: 0;
     z-index: 5;
     background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .search-box-item {
@@ -474,7 +558,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     left: 0;
     z-index: 5;
     background-color: white;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .button {
@@ -486,13 +570,12 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .button:hover .ripples {
-    background-color: rgba(0,0,0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .button:focus .ripples {
-    background-color: rgba(0,0,0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
-
 
 
 .button label {
@@ -531,7 +614,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 .ripples {
     pointer-events: none;
     position: absolute;
-    clip: rect(0,100px,50px,0);
+    clip: rect(0, 100px, 50px, 0);
     left: 0;
     top: 0;
     right: 0;
@@ -539,7 +622,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .button-sm .ripples {
-    clip: rect(0,50px,50px,0);
+    clip: rect(0, 50px, 50px, 0);
 }
 
 .ripple {
@@ -581,6 +664,11 @@ input[type=date]:focus::-webkit-datetime-edit {
 .calendar-day {
     width: calc(100% / 7);
     height: 100px;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .calendar-day-header {
@@ -590,7 +678,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .calendar-day:hover {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .calendar-day-channel {
@@ -604,7 +692,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .mx-disclosure {
-    
+
 }
 
 .mx-disclosure summary {
@@ -642,7 +730,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     width: calc(100% - 50px);
     transform: translateX(100vw);
     transition: 0.5s;
-    position:  absolute;
+    position: absolute;
 }
 
 .mx-active-page {

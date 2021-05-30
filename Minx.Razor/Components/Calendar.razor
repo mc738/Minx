@@ -56,7 +56,7 @@
                 {
                     var info = GetDayInfo(day.Date);
 
-                    <div class="calendar-day">
+                    <div class="calendar-day" @onclick="() => DaySelected(day.Date)">
                         <div class="calendar-day-header">
                             <div>
                                 <p>@day.Date.ToString("dd")</p>
@@ -144,6 +144,14 @@
 
     DateTime firstOfMonth;
 
+    DateTime _selectedDate = DateTime.Now;
+    
+    [Parameter]
+    public EventCallback<DateTime> DateChanged { get; set; }
+    
+    [Parameter]
+    public EventCallback<DateTime> DateSelected { get; set; }
+    
     [Parameter]
     public IEnumerable<HeaderButton> HeaderButtons { get; set; }
     
@@ -199,6 +207,9 @@
         }
 
         monthView = new Month() {Weeks = weeks};
+
+        if (DateChanged.HasDelegate)
+            DateChanged.InvokeAsync(firstOfMonth.Date);
     }
 
     Week CreateWeek(DateTime startDate)
@@ -284,15 +295,13 @@
         var dayItems = Items.Where(x => x.Date.Date == date.Date).ToList();
 
         info.Tags = dayItems.Where(x => x.IsTag).Select(x => DayTag.Create(x.TagIcon));
-
-        Console.WriteLine($"{date}: {dayItems.Count}");
         
         info.Channel1 = dayItems.FirstOrDefault(x => x.Channel == 1 && !x.IsTag);
         info.Channel2 = dayItems.FirstOrDefault(x => x.Channel == 2 && !x.IsTag);
         info.Channel3 = dayItems.FirstOrDefault(x => x.Channel == 3 && !x.IsTag);
         info.Channel4 = dayItems.FirstOrDefault(x => x.Channel == 4 && !x.IsTag);
         info.Channel5 = dayItems.FirstOrDefault(x => x.Channel == 5 && !x.IsTag);
-
+        
         return info;
     }
 
@@ -304,4 +313,30 @@
         return null;
     }
 
+    private void DaySelected(DateTime date)
+    {
+        _selectedDate = date;
+        if (DateSelected.HasDelegate)
+            DateSelected.InvokeAsync(date);
+    }
+
+    private string GetBackgroundColour(DateTime date)
+    {
+        if (date.Date == _selectedDate.Date)
+        {
+            return "background-color: hotpink";
+        }
+        
+        if (date.Date == DateTime.Now.Date)
+        {
+            return "background-color: grey";
+        }
+        
+        if (date.Month != month)
+        {
+            return "background-color: lightgrey";
+        }
+
+        return string.Empty;
+    }
 }
