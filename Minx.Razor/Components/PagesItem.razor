@@ -1,12 +1,10 @@
-﻿
-@if (IsActive())
-{
+<div class="@GenerateClasses()">
     @ChildContent
-}
+</div>
 
 @code {
     [CascadingParameter]
-    private TabControl Parent { get; set; }
+    private PagesControl Parent { get; set; }
 
     [Parameter]
     public string Icon { get; set; }
@@ -27,11 +25,20 @@
 
         base.OnInitialized();
 
-        Parent.AddPage((TabItem)(object)this);
+        Parent.AddPage((PagesItem)(object)this);
     }
 
     public bool IsActive()
     {
-        return Parent.ActivePage == (TabItem)(object)this;
+        return Parent.ActivePage == (PagesItem)(object)this;
     }
+
+    public string GenerateClasses()
+    {
+        if (IsActive())
+            return "mx-page mx-active-page";
+
+        return "mx-page";
+    }
+        
 }

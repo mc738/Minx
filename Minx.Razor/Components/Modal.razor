@@ -1,10 +1,8 @@
-﻿@inherits ModalBase
+﻿@using Minx.Razor.Models
+@inherits ModalBase
 
 <div class="modal-container @(IsVisible ? "modal-active" : string.Empty)">
-
     <div class="modal-overlay"></div>
-
-
     <div class="modal">
         <Card Size="Card.CardSize.Full" Title="@Title" FixedSize="false" headerButtons="headerButtons">
             @Content
@@ -15,13 +13,12 @@
 
 @code {
 
-    IEnumerable<Card.HeaderButton> headerButtons;
-
-
+    IEnumerable<HeaderButton> headerButtons;
+    
     protected override void OnInitialized()
     {
-        headerButtons = new List<Card.HeaderButton>(){
-            new Card.HeaderButton("fas fa-times", EventCallback.Factory.Create(this, CloseModal))};
+        headerButtons = new List<HeaderButton>(){
+            new HeaderButton("fas fa-times", EventCallback.Factory.Create(this, CloseModal))};
 
         base.OnInitialized();
     }

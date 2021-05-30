@@ -1,9 +1,9 @@
 <div class="mx-input">
-    <input type="number" @bind="Value" step=".000001" required>
+    <input type="number" @bind="Value" required>
     <label>
         @Label @if (ShowMessage)
         {
-            if (value == null && !Required)
+            if (!Required)
             {
                 <span style="padding-left: 10px; text-transform: none; font-style: italic; font-size: 8pt; opacity: 0.7;">Optional</span>
             }
@@ -25,8 +25,7 @@
 
 @code {
 
-
-    double? value;
+    int value;
 
     [Parameter]
     public bool Required { get; set; } = false;
@@ -44,16 +43,16 @@
     public bool ShowMessage { get; set; } = true;
 
     [Parameter]
-    public double Value
+    public int Value
     {
-        get => value.HasValue ? value.Value : 0;
+        get => value;
         set
         {
-            @* if (!value.HasValue && Required)
+            if (Required)
             {
                 ErrorMessage = "Required";
                 Valid = false;
-            } *@
+            }
 
             if (this.value != value)
             {
@@ -65,12 +64,11 @@
     }
 
     [Parameter]
-    public EventCallback<double> ValueChanged { get; set; }
-
+    public EventCallback<int> ValueChanged { get; set; }
 
     async System.Threading.Tasks.Task Update()
     {
-        await ValueChanged.InvokeAsync(Value);
+        await ValueChanged.InvokeAsync(value);
     }
 
 }

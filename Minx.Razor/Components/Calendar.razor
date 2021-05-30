@@ -1,10 +1,25 @@
-﻿
-<div style="display: flex; justify-content: flex-end">
-    <Button Icon="fas fa-chevron-left" IconButton="true" Border="false" Clicked="PerviousMonth"></Button>
-    <div style="display: flex; align-items: center; height: 50px">
-        <p>@firstOfMonth.ToString("MMM yy")</p>
+﻿@using Minx.Razor.Inputs
+@using Minx.Razor.Models
+
+<div style="display: flex; justify-content: space-between">
+    <div style="display: flex">
+        @if (HeaderButtons != null)
+        {
+            <div class="header-buttons">
+                @foreach (var button in HeaderButtons)
+                {
+                    <Button Icon="@button.Icon" IconButton="true" Border="false" Clicked="@button.Callback"></Button>
+                }
+            </div>
+        }
     </div>
-    <Button Icon="fas fa-chevron-right" IconButton="true" Border="false" Clicked="NextMonth"></Button>
+    <div style="display: flex">
+        <Button Icon="fas fa-chevron-left" IconButton="true" Border="false" Clicked="PreviousMonth"></Button>
+        <div style="display: flex; align-items: center; height: 50px">
+            <p>@firstOfMonth.ToString("MMM yy")</p>
+        </div>
+        <Button Icon="fas fa-chevron-right" IconButton="true" Border="false" Clicked="NextMonth"></Button>
+    </div>
 </div>
 
 <div style="width: 100%; display: flex;">
@@ -39,12 +54,83 @@
             <div style="width: 100%; display: flex;">
                 @foreach (var day in week.Days)
                 {
-                    <div  class="calendar-item">
-                        <p>@day.Date.ToString("dd")</p>
+                    var info = GetDayInfo(day.Date);
+
+                    <div class="calendar-day" @onclick="() => DaySelected(day.Date)">
+                        <div class="calendar-day-header">
+                            <div>
+                                <p>@day.Date.ToString("dd")</p>
+                            </div>
+                            <div>
+                                @foreach (var tag in info.Tags)
+                                {
+                                    <span>
+                                        <i class="@tag.Icon" style="width: 20px; text-align: center"></i>
+                                    </span>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="calendar-day-channel">
+                            <div class="calendar-item">
+                                @if (@info.Channel1 != null)
+                                {
+                                    <div style="height: 100%; width: 100%; background-color: @info.Channel1.Color">
+                                        @if (@info.Channel1.ShowLabel)
+                                        {
+                                            <p>@info.Channel1.Label</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div class="calendar-item">
+                                @if (@info.Channel2 != null)
+                                {
+                                    <div style="height: 100%; width: 100%; background-color: @info.Channel2.Color">
+                                        @if (@info.Channel2.ShowLabel)
+                                        {
+                                            <p>@info.Channel2.Label</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div class="calendar-item">
+                                @if (@info.Channel3 != null)
+                                {
+                                    <div style="height: 100%; width: 100%; background-color: @info.Channel3.Color">
+                                        @if (@info.Channel3.ShowLabel)
+                                        {
+                                            <p>@info.Channel3.Label</p>
+                                        }
+                                    </div>
+                                }
+                            </div>    
+                            <div class="calendar-item">
+                                @if (@info.Channel4 != null)
+                                {
+                                    <div style="height: 100%; width: 100%; background-color: @info.Channel4.Color">
+                                        @if (@info.Channel4.ShowLabel)
+                                        {
+                                            <p>@info.Channel4.Label</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div class="calendar-item">
+                                @if (@info.Channel5 != null)
+                                {
+                                    <div style="height: 100%; width: 100%; background-color: @info.Channel5.Color">
+                                        @if (@info.Channel5.ShowLabel)
+                                        {
+                                            <p>@info.Channel5.Label</p>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 }
             </div>
-
         }
     </div>
 }
@@ -58,6 +144,19 @@
 
     DateTime firstOfMonth;
 
+    DateTime _selectedDate = DateTime.Now;
+    
+    [Parameter]
+    public EventCallback<DateTime> DateChanged { get; set; }
+    
+    [Parameter]
+    public EventCallback<DateTime> DateSelected { get; set; }
+    
+    [Parameter]
+    public IEnumerable<HeaderButton> HeaderButtons { get; set; }
+    
+    [Parameter]
+    public IEnumerable<CalendarItem> Items { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -72,19 +171,17 @@
         RenderFragment content() => builder =>
         {
             builder.OpenComponent(0, typeof(Calendar));
-        // builder.AddAttribute(1, "ProjectReference", projectReference);
-        // builder.AddAttribute(2, "Added", addedCallBack);
-        builder.CloseComponent();
+    // builder.AddAttribute(1, "ProjectReference", projectReference);
+    // builder.AddAttribute(2, "Added", addedCallBack);
+            builder.CloseComponent();
         };
 
         return content();
     }
 
-
     void CreateMonthView()
     {
-
-        //var month = int.Parse(Console.ReadLine());
+    //var month = int.Parse(Console.ReadLine());
 
         firstOfMonth = new DateTime(year, month, 1);
 
@@ -94,7 +191,7 @@
 
         var firstDay = firstOfMonth.AddDays(-1 * diff);
 
-        var lastDay = lastOfMonth.AddDays(7 - (int)lastOfMonth.DayOfWeek);
+        var lastDay = lastOfMonth.AddDays(7 - (int) lastOfMonth.DayOfWeek);
 
 
         var weeks = new List<Week>();
@@ -109,7 +206,10 @@
             currentDate = currentDate.AddDays(7);
         }
 
-        monthView = new Month() { Weeks = weeks };
+        monthView = new Month() {Weeks = weeks};
+
+        if (DateChanged.HasDelegate)
+            DateChanged.InvokeAsync(firstOfMonth.Date);
     }
 
     Week CreateWeek(DateTime startDate)
@@ -121,12 +221,12 @@
             days.Add(CreateDay(startDate.AddDays(i)));
         }
 
-        return new Week() { Days = days };
+        return new Week() {Days = days};
     }
 
     Day CreateDay(DateTime date)
     {
-        return new Day() { Date = date };
+        return new Day() {Date = date};
     }
 
     class Month
@@ -144,7 +244,6 @@
         public DateTime Date { get; set; }
     }
 
-
     void NextMonth()
     {
         firstOfMonth = firstOfMonth.AddMonths(1);
@@ -155,7 +254,7 @@
         CreateMonthView();
     }
 
-    void PerviousMonth()
+    void PreviousMonth()
     {
         firstOfMonth = firstOfMonth.AddMonths(-1);
 
@@ -163,5 +262,81 @@
         month = firstOfMonth.Month;
 
         CreateMonthView();
+    }
+
+    class DayTag
+    {
+        public string Icon { get; set; }
+
+        public static DayTag Create(string icon) =>
+            new DayTag() {Icon = icon};
+    }
+
+    class ChannelData
+    {
+        public bool Occupied { get; set; }
+        public string Color { get; set; } = "hotpink";
+    }
+
+    class DayInfo
+    {
+        public IEnumerable<DayTag> Tags { get; set; } = new List<DayTag>();
+        public CalendarItem Channel1 { get; set; }
+        public CalendarItem Channel2 { get; set; }
+        public CalendarItem Channel3 { get; set; }
+        public CalendarItem Channel4 { get; set; }
+        public CalendarItem Channel5 { get; set; }
+    }
+
+    DayInfo GetDayInfo(DateTime date)
+    {
+        var info = new DayInfo();
+
+        var dayItems = Items.Where(x => x.Date.Date == date.Date).ToList();
+
+        info.Tags = dayItems.Where(x => x.IsTag).Select(x => DayTag.Create(x.TagIcon));
+        
+        info.Channel1 = dayItems.FirstOrDefault(x => x.Channel == 1 && !x.IsTag);
+        info.Channel2 = dayItems.FirstOrDefault(x => x.Channel == 2 && !x.IsTag);
+        info.Channel3 = dayItems.FirstOrDefault(x => x.Channel == 3 && !x.IsTag);
+        info.Channel4 = dayItems.FirstOrDefault(x => x.Channel == 4 && !x.IsTag);
+        info.Channel5 = dayItems.FirstOrDefault(x => x.Channel == 5 && !x.IsTag);
+        
+        return info;
+    }
+
+    CalendarItem GetCalenderItem(DateTime date, int channel)
+    {
+        if (Items != null)
+            return Items.FirstOrDefault(x => x.Date.Date == date.Date && x.Channel == channel);
+
+        return null;
+    }
+
+    private void DaySelected(DateTime date)
+    {
+        _selectedDate = date;
+        if (DateSelected.HasDelegate)
+            DateSelected.InvokeAsync(date);
+    }
+
+    private string GetBackgroundColour(DateTime date)
+    {
+        if (date.Date == _selectedDate.Date)
+        {
+            return "background-color: hotpink";
+        }
+        
+        if (date.Date == DateTime.Now.Date)
+        {
+            return "background-color: grey";
+        }
+        
+        if (date.Month != month)
+        {
+            return "background-color: lightgrey";
+        }
+
+        return string.Empty;
     }
 }

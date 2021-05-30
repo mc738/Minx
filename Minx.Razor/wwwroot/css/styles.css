@@ -1,10 +1,36 @@
-﻿* {
+﻿:root {
+    --color1: lightblue;
+    --color2: lightgrey;
+    --black: black;
+}
+
+* {
     margin: 0;
     border: none;
     padding: 0;
     box-sizing: border-box;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
+    text-align: left;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+.fill {
+    height: 100%;
+    width: 100%;
+}
+
+.fill-screen {
+    height: 100vh;
+    width: 100vw;
 }
 
 .content {
@@ -40,6 +66,69 @@
     height: 100%;
     width: 100%;
 }
+
+/*Loading screen*/
+.loading-screen {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loading-screen div {
+    position: relative;
+}
+
+.loading-screen div .spinner {
+    border: 10px solid transparent;
+    border-top: 10px solid black;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-screen div #spinner1 {
+    height: 80px;
+    width: 80px;
+    animation: spin 1s linear infinite;
+    margin: -55px 0 0 -55px;
+}
+
+.loading-screen div #spinner2 {
+    height: 100px;
+    width: 100px;
+    animation: spin 1.5s linear infinite;
+    margin: -65px 0 0 -65px;
+}
+
+.loading-screen div #spinner3 {
+    animation: spin 2s linear infinite;
+    margin: -75px 0 0 -75px;
+    width: 120px;
+    height: 120px;
+}
+
+.show {
+    opacity: 1;
+    z-index: 1000; }
+
+.hide {
+    opacity: 0;
+    z-index: -1000; }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); }
+    100% {
+        transform: rotate(360deg); } }
 
 /*Modals*/
 .modal-container {
@@ -129,7 +218,7 @@
     /*background-color: white;*/
     /*border: solid #ccc;
     border-width: 1px 1px 0 1px;*/
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid var(--color1);
 }
 
 .tab-content {
@@ -144,14 +233,17 @@
     justify-content: space-between;
 }
 
+.card {
+    overflow: hidden;
+}
+
 .card-title {
     padding: 0.5rem;
 }
 
-:root {
-    --color1: lightblue;
-    --color2: lightgrey;
-    --black: black;
+.card-body {
+    height: calc(100% - 50px);
+    overflow-y: scroll;
 }
 
 input, textarea, select {
@@ -172,17 +264,46 @@ input[type=date]:focus::-webkit-datetime-edit {
     color: black !important;
 }
 
+.header-buttons {
+    display: flex;
+}
+
+.mx-label {
+    position: relative;
+    min-height: 50px;
+}
+
+.mx-label label {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    font-size: 10pt;
+    pointer-events: none;
+}
+
+.mx-label p {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    font-size: 14pt;
+    right: 0;
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    /*Currently a bit of a hack to get the label to match up with inputs.*/
+    padding-top: 2px;
+}
+
 .mx-input {
     position: relative;
     height: 50px;
 }
 
-
 .mx-input label {
     position: absolute;
     left: 5px;
-    top: 20px;
-    font-size: 12pt;
+    top: 5px;
+    font-size: 10pt;
     transition: 0.3s;
     pointer-events: none;
 }
@@ -196,13 +317,12 @@ input[type=date]:focus::-webkit-datetime-edit {
     width: 100%;
     height: 30px;
     padding-left: 5px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color2);
 }
 
 .mx-input input:valid {
     border-bottom: 3px solid var(--color1);
 }
-
 
 
 .mx-input input:focus + label,
@@ -254,7 +374,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     width: 100%;
     height: 80px;
     padding-left: 5px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color2);
 }
 
 .mx-textarea textarea:valid {
@@ -309,7 +429,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     right: 0;
     width: 100%;
     height: 30px;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid var(--color1);
 }
 
 .mx-select select:valid {
@@ -407,7 +527,6 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 
-
 .search-box {
     width: 100%;
     position: absolute;
@@ -415,7 +534,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     left: 0;
     z-index: 5;
     background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .search-box-item {
@@ -424,7 +543,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .search-box-item:hover {
-    background-color: lightgray;
+    background-color: var(--color2);
 }
 
 .search-box-item p {
@@ -439,7 +558,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     left: 0;
     z-index: 5;
     background-color: white;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .button {
@@ -451,13 +570,12 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .button:hover .ripples {
-    background-color: rgba(0,0,0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .button:focus .ripples {
-    background-color: rgba(0,0,0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
-
 
 
 .button label {
@@ -496,7 +614,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 .ripples {
     pointer-events: none;
     position: absolute;
-    clip: rect(0,100px,50px,0);
+    clip: rect(0, 100px, 50px, 0);
     left: 0;
     top: 0;
     right: 0;
@@ -504,7 +622,7 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 .button-sm .ripples {
-    clip: rect(0,50px,50px,0);
+    clip: rect(0, 50px, 50px, 0);
 }
 
 .ripple {
@@ -536,4 +654,85 @@ input[type=date]:focus::-webkit-datetime-edit {
 
 .t-h th {
     min-width: 50px;
+}
+
+.calendar-header {
+    width: calc(100% / 7);
+    height: 50px;
+}
+
+.calendar-day {
+    width: calc(100% / 7);
+    height: 100px;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.calendar-day-header {
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.calendar-day:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.calendar-day-channel {
+    height: 16px;
+    width: 100%;
+}
+
+.calendar-item {
+    width: 100%;
+    height: 100%;
+}
+
+.mx-disclosure {
+
+}
+
+.mx-disclosure summary {
+    cursor: pointer;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mx-disclosure summary h3 {
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.mx-disclosure summary > * {
+    display: inline;
+}
+
+.mx-pages-control {
+    height: 100%;
+    width: calc(100% - 50px);
+    display: flex;
+}
+
+.mx-pages-sidebar {
+    height: 100%;
+    width: 50px;
+    background-color: var(--color2);
+    position: relative;
+}
+
+.mx-page {
+    height: 100%;
+    width: calc(100% - 50px);
+    transform: translateX(100vw);
+    transition: 0.5s;
+    position: absolute;
+}
+
+.mx-active-page {
+    transform: translateX(0);
 }

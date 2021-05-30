@@ -1,0 +1,31 @@
+@using Minx.Razor.Models
+@using Minx.Razor.Inputs
+<details class="mx-disclosure" open>
+    <summary>
+        <h3>@Title</h3>
+         @if (HeaderButtons != null)
+            {
+                <div class="header-buttons">
+                    @foreach (var button in HeaderButtons)
+                    {
+                        <Button Icon="@button.Icon" IconButton="true" Border="false" Clicked="@button.Callback"></Button>
+                    }
+                </div>
+            }
+    </summary>
+    @ChildContent
+</details>
+
+
+@code {
+    
+    [Parameter]
+    public string Title { get; set; }
+    
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public IEnumerable<HeaderButton> HeaderButtons { get; set; }
+
+}

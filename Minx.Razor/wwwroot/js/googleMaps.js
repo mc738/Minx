@@ -38,7 +38,7 @@ window.maps = {
         //marker.setLabel("Hello World!");
         //console.log("Hello");
     },
-    addOrganisationMarker: function (text, lat, long, reference) {
+    addMarker: function (text, lat, long, reference) {
 
         var pos = { lat: lat, lng: long };
 
@@ -55,31 +55,9 @@ window.maps = {
         google.maps.event.addListener(marker, 'click', function() {
             console.log(this.reference);
 
-            this.instance.invokeMethodAsync('OrganisationSelected', this.reference);
+            this.instance.invokeMethodAsync('OnMarkerSelect', this.reference);
         });
         
-        // marker.addListener();
-    },
-    addActivityMarker: function (text, lat, long, reference) {
-
-        var pos = { lat: lat, lng: long };
-
-        var marker = new google.maps.Marker({ position: pos, map: this.map });
-
-        this.markers.push(marker);
-        // marker.setLabel(text);
-
-        // var instance = this.instance;
-
-        marker.reference = reference;
-        marker.instance = this.instance;
-
-        google.maps.event.addListener(marker, 'click', function() {
-            console.log(this.reference);
-
-            this.instance.invokeMethodAsync('ActivitySelected', this.reference);
-        });
-
         // marker.addListener();
     },
     clearMarkers: function () {

@@ -1,4 +1,6 @@
-﻿
+﻿@using Minx.Razor.Inputs
+@using Minx.Razor.Models
+
 <div class="card @GenerateCardSizeClass() @GenerateCardType() @GenerateFixedSize()">
     <div class="card-header">
         <div class="card-title">
@@ -74,21 +76,6 @@
     private string GenerateCardType() => IsDark ? "dark" : "light";
 
     private string GenerateFixedSize() => FixedSize ? "fixed-size" : string.Empty;
-
-    public class HeaderButton
-    {
-        private readonly string icon;
-        private readonly EventCallback callback;
-
-        public string Icon => icon;
-        public EventCallback Callback => callback;
-
-        public HeaderButton(string icon, EventCallback callback)
-        {
-            this.icon = icon;
-            this.callback = callback;
-        }
-    }
 
     public enum CardSize
     {

@@ -1,4 +1,4 @@
-﻿@using Minx.Razor.Models
+@using Minx.Razor.Models
 <div class="mx-input">
     <input type="text" @bind="Value" @oninput="FilterItems" @onfocus="ShowSearchBox" required>
     <label>
@@ -36,7 +36,7 @@
 
 @code {
     string value;
-    public Guid selectedReference = Guid.Empty;
+    public int selectedValue = 0;
 
     [Parameter]
     public bool Required { get; set; } = false;
@@ -54,7 +54,7 @@
     public bool ShowMessage { get; set; } = true;
 
     [Parameter]
-    public IEnumerable<DropDownItem> Items { get; set; }
+    public IEnumerable<LabelledIntItem> Items { get; set; }
 
     [Parameter]
     public string Value
@@ -78,9 +78,9 @@
     }
 
     [Parameter]
-    public Guid SelectedReference
+    public int SelectedValue
     {
-        get => selectedReference;
+        get => selectedValue;
         set
         {
             if (value == null && Required)
@@ -89,9 +89,9 @@
                 Valid = false;
             }
 
-            if (this.selectedReference != value)
+            if (this.selectedValue != value)
             {
-                this.selectedReference = value;
+                this.selectedValue = value;
                 // ItemSelected.InvokeAsync(value.Value);
             }
         }
@@ -101,11 +101,11 @@
     public EventCallback<string> ValueChanged { get; set; }
 
     [Parameter]
-    public EventCallback<Guid> SelectedReferenceChanged { get; set; }
+    public EventCallback<int> SelectedValueChanged { get; set; }
 
     bool displaySearchBox = false;
 
-    List<DropDownItem> filteredItems = new List<DropDownItem>();
+    List<LabelledIntItem> filteredItems = new List<LabelledIntItem>();
 
     protected override void OnParametersSet()
     {
@@ -142,13 +142,13 @@
         }
     }
 
-    public void SelectItem(DropDownItem item)
+    public void SelectItem(LabelledIntItem item)
     {
         if (item != null)
         {
             Value = item.Name;
-            selectedReference = item.Reference;
-            SelectedReferenceChanged.InvokeAsync(selectedReference);
+            selectedValue = item.Id;
+            SelectedValueChanged.InvokeAsync(selectedValue);
         }
 
         displaySearchBox = false;

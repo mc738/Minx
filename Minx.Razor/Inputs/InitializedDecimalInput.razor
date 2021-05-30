@@ -26,7 +26,7 @@
 @code {
 
 
-    double? value;
+    decimal value = 0;
 
     [Parameter]
     public bool Required { get; set; } = false;
@@ -44,17 +44,11 @@
     public bool ShowMessage { get; set; } = true;
 
     [Parameter]
-    public double Value
+    public decimal Value
     {
-        get => value.HasValue ? value.Value : 0;
+        get => value;
         set
         {
-            @* if (!value.HasValue && Required)
-            {
-                ErrorMessage = "Required";
-                Valid = false;
-            } *@
-
             if (this.value != value)
             {
                 this.value = value;
@@ -65,12 +59,10 @@
     }
 
     [Parameter]
-    public EventCallback<double> ValueChanged { get; set; }
-
-
+    public EventCallback<decimal> ValueChanged { get; set; }
+    
     async System.Threading.Tasks.Task Update()
     {
-        await ValueChanged.InvokeAsync(Value);
+        await ValueChanged.InvokeAsync(value);
     }
-
 }
