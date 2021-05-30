@@ -1,0 +1,167 @@
+@using Minx.Razor.Models
+<div class="mx-input">
+    <input type="text" @bind="Value" @oninput="FilterItems" @onfocus="ShowSearchBox" required>
+    <label>
+        @Label @if (ShowMessage)
+        {
+            if (value == null && !Required)
+            {
+                <span style="padding-left: 10px; text-transform: none; font-style: italic; font-size: 8pt; opacity: 0.7;">Optional</span>
+            }
+            else if (Valid.HasValue)
+            {
+                if (Valid.Value)
+                {
+                    <span style="padding-left: 10px; color: green;"><i class="fas fa-check"></i></span>
+                }
+                else
+                {
+                    <span style="padding-left: 10px; color: red; text-transform: none; font-style: italic;"><i class="fas fa-exclamation"></i> @ErrorMessage</span>
+                }
+            }
+        }
+    </label>
+    @if (displaySearchBox)
+    {
+        <div class="search-box">
+            @foreach (var item in filteredItems)
+            {
+                <div class="search-box-item">
+                    <p @onclick="() => SelectItem(item)">@item.Name</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    string value;
+    public int selectedValue = 0;
+
+    [Parameter]
+    public bool Required { get; set; } = false;
+
+    [Parameter]
+    public string ErrorMessage { get; set; } = "Error";
+
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool? Valid { get; set; }
+
+    [Parameter]
+    public bool ShowMessage { get; set; } = true;
+
+    [Parameter]
+    public IEnumerable<LabelledIntItem> Items { get; set; }
+
+    [Parameter]
+    public string Value
+    {
+        get => value;
+        set
+        {
+            if (value == String.Empty && Required)
+            {
+                ErrorMessage = "Required";
+                Valid = false;
+            }
+
+            if (this.value != value)
+            {
+                this.value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+
+    }
+
+    [Parameter]
+    public int SelectedValue
+    {
+        get => selectedValue;
+        set
+        {
+            if (value == null && Required)
+            {
+                ErrorMessage = "Required";
+                Valid = false;
+            }
+
+            if (this.selectedValue != value)
+            {
+                this.selectedValue = value;
+                // ItemSelected.InvokeAsync(value.Value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<int> SelectedValueChanged { get; set; }
+
+    bool displaySearchBox = false;
+
+    List<LabelledIntItem> filteredItems = new List<LabelledIntItem>();
+
+    protected override void OnParametersSet()
+    {
+        //        base.OnParametersSet();
+
+        if (Items != null)
+        {
+            filteredItems = Items.ToList();
+            // TODO Needed?
+            StateHasChanged();
+        }
+    }
+
+    async System.Threading.Tasks.Task Update()
+    {
+        await ValueChanged.InvokeAsync(value);
+    }
+
+    public void ShowSearchBox()
+    {
+        displaySearchBox = true;
+    }
+
+
+    public void FilterItems(ChangeEventArgs args)
+    {
+        if (args.Value != null)
+        {
+            filteredItems = Items.Where(x => x.Name.ToLower().Contains(args.Value.ToString().ToLower())).ToList();
+        }
+        else
+        {
+            filteredItems = Items.ToList();
+        }
+    }
+
+    public void SelectItem(LabelledIntItem item)
+    {
+        if (item != null)
+        {
+            Value = item.Name;
+            selectedValue = item.Id;
+            SelectedValueChanged.InvokeAsync(selectedValue);
+        }
+
+        displaySearchBox = false;
+    }
+
+    //public void AutoSelect()
+    //{
+    //    if (filteredItems != null)
+    //        SelectItem(filteredItems[0].Id);
+    //}
+
+    public void HideSearchBox()
+    {
+        displaySearchBox = false;
+    }
+}
